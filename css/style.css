@@ -1,0 +1,311 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+
+/* ================= HERO ================= */
+
+.hero {
+    min-height: 80vh;
+    background-color: #f5f7fa;
+
+    display: flex;
+    align-items: center;
+}
+
+
+/* Welcome text */
+
+.hero h1 {
+    color: #1D3557;
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    color: #555;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+
+/* University logo */
+
+.university-logo {
+    width: 400px;
+    max-width: 100%;
+
+    animation: upDown 3s ease-in-out infinite;
+}
+
+
+
+/* Up and down animation */
+
+@keyframes upDown {
+
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+
+}
+
+
+/* ================= NAVBAR ================= */
+
+.nav-bar {
+    background-color: #F2E8D2;
+    margin: 0;
+    border-bottom: 1px solid #1D3557;
+}
+
+.navbar-brand {
+    color: #1D3557;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.navbar-brand:hover {
+    color: #1D3557;
+}
+
+.nav-link {
+    color: #1D3557;
+    font-size: 18px;
+}
+
+.nav-link:hover {
+    color: #47B2E4;
+}
+
+
+/* ================= FOOTER ================= */
+
+.footer {
+    background-color: #F2E8D2;
+    color: #1D3557;
+
+    padding: 60px 0 20px;
+
+    border-top: 1px solid #1D3557;
+}
+
+.footer h3 {
+    color: #1D3557;
+
+    font-size: 25px;
+
+    margin-bottom: 20px;
+}
+
+.footer h4 {
+    color: #1D3557;
+
+    font-size: 20px;
+
+    margin-bottom: 20px;
+}
+
+.footer p {
+    color: #1D3557;
+
+    line-height: 1.7;
+}
+
+
+/* Footer Links */
+
+.footer-links {
+    list-style: none;
+
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #1D3557;
+
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: #47B2E4;
+}
+
+
+/* Footer Bottom */
+
+.footer-bottom {
+    border-top: 1px solid #1D3557;
+
+    margin-top: 30px;
+
+    padding-top: 20px;
+
+    text-align: center;
+}
+
+.footer-bottom p {
+    margin: 0;
+
+    font-size: 14px;
+}
+
+
+/* ================= ADD STUDENT ================= */
+
+.add-section {
+    background-color: #f5f7fa;
+    min-height: 85vh;
+    padding: 60px 20px;
+}
+
+
+/* Main form box */
+
+.add-form {
+    width: 800px;
+    max-width: 100%;
+
+    margin: 0 auto;
+
+    padding: 40px;
+
+    background-color: #F2E8D2;
+
+    border-radius: 15px;
+
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Heading */
+
+.form-title {
+    color: #1D3557;
+
+    text-align: center;
+
+    font-size: 40px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+
+/* Description */
+
+.form-description {
+    color: #555;
+
+    text-align: center;
+
+    margin-bottom: 35px;
+}
+
+
+/* Labels */
+
+.form-label {
+    color: #1D3557;
+
+    font-weight: bold;
+}
+
+
+/* Inputs */
+
+.add-form .form-control,
+.add-form .form-select {
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    border: 1px solid #ced4da;
+}
+
+
+/* Input focus */
+
+.add-form .form-control:focus,
+.add-form .form-select:focus {
+
+    border-color: #1D3557;
+
+    box-shadow: 0 0 0 0.2rem rgba(29, 53, 87, 0.15);
+}
+
+
+/* Button */
+
+.add-form .btn-primary {
+
+    background-color: #1D3557;
+
+    border-color: #1D3557;
+
+    padding: 12px;
+
+    font-weight: bold;
+
+    border-radius: 8px;
+}
+
+
+.add-form .btn-primary:hover {
+
+    background-color: #47B2E4;
+
+    border-color: #47B2E4;
+}
+/* ================= VIEW PAGES ================= */
+
+.view-section {
+    background-color: #f5f7fa;
+    min-height: 85vh;
+    padding: 60px 0;
+}
+
+.page-title {
+    color: #1D3557;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 35px;
+}
+
+.table-container {
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.table thead th {
+    background-color: #F2E8D2;
+    color: #1D3557;
+    font-weight: bold;
+}
+
+.table tbody td {
+    vertical-align: middle;
+}
+
