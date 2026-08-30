@@ -71,27 +71,27 @@ $result = mysqli_query($connection, $sql);
 
                         <?php
 
-                        while ($student = mysqli_fetch_assoc($result)) {
+                        while ($course = mysqli_fetch_assoc($result)) {
 
                         ?>
 
                             <tr>
 
                                 <td>
-                                    <?php echo $student['course_id']; ?>
+                                    <?php echo $course['course_id']; ?>
                                 </td>
 
                                 <td>
-                                    <?php echo $student['course_name']; ?>
+                                    <?php echo $course['course_name']; ?>
                                 </td>
 
                                 <td>
-                                    <?php echo $student['weight']; ?>
+                                    <?php echo $course['weight']; ?>
                                 </td>
 
                                 
                                 <td>
-                                    <?php echo $student['department_name']; ?>
+                                    <?php echo $course['department_name']; ?>
                                 </td>
                                 <td>
 

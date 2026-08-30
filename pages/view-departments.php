@@ -63,22 +63,22 @@ $result = mysqli_query($connection, $sql);
 
                         <?php
 
-                        while ($student = mysqli_fetch_assoc($result)) {
+                        while ($department = mysqli_fetch_assoc($result)) {
 
                         ?>
 
                             <tr>
 
                                 <td>
-                                    <?php echo $student['department_id']; ?>
+                                    <?php echo $department['department_id']; ?>
                                 </td>
 
                                 <td>
-                                    <?php echo $student['department_name']; ?>
+                                    <?php echo $department['department_name']; ?>
                                 </td>
 
                                 <td>
-                                    <?php echo $student['department_code']; ?>
+                                    <?php echo $department['department_code']; ?>
                                 </td>
                                 <td>
 

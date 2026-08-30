@@ -71,27 +71,27 @@ $result = mysqli_query($connection, $sql);
 
                         <?php
 
-                        while ($student = mysqli_fetch_assoc($result)) {
+                        while ($doctor = mysqli_fetch_assoc($result)) {
 
                         ?>
 
                             <tr>
 
                                 <td>
-                                    <?php echo $student['doctor_id']; ?>
+                                    <?php echo $doctor['doctor_id']; ?>
                                 </td>
 
                                 <td>
-                                    <?php echo $student['doctor_name']; ?>
+                                    <?php echo $doctor['doctor_name']; ?>
                                 </td>
 
                                 <td>
-                                    <?php echo $student['doctor_gender']; ?>
+                                    <?php echo $doctor['doctor_gender']; ?>
                                 </td>
             
 
                                 <td>
-                                    <?php echo $student['department_name']; ?>
+                                    <?php echo $doctor['department_name']; ?>
                                 </td>
                                 <td>
 
@@ -102,7 +102,7 @@ $result = mysqli_query($connection, $sql);
                                     </a>
 
                                     <a
-                                        href="delete-doctor.php?id=<?php echo $doctor['doctor_id']; ?>"
+                                        href="delete-doctors.php?id=<?php echo $doctor['doctor_id']; ?>"
                                         class="btn btn-danger btn-sm">
                                         Delete
                                     </a>
