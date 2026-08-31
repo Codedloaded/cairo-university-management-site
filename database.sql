@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 30, 2026 at 05:27 AM
+-- Generation Time: Aug 31, 2026 at 08:17 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,12 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`course_id`, `course_name`, `weight`, `department_id`, `course_code`) VALUES
-(1, 'Introduction to Computer Science', 3, 1, 'CS-111');
+(1, 'Introduction to Computer Science', 3, 1, 'CS-111'),
+(2, 'Math 1', 3, 1, 'MA-111'),
+(3, 'Probability and Statistics-1', 3, 5, 'ST-121'),
+(4, 'Ethics', 2, 6, 'HU-121'),
+(5, 'Electronics', 3, 3, 'IT-111'),
+(6, 'Math 2', 3, 6, 'MA-121');
 
 -- --------------------------------------------------------
 
@@ -63,7 +68,8 @@ INSERT INTO `departments` (`department_id`, `department_name`, `department_code`
 (2, 'Information System', 'IS'),
 (3, 'Information Technology', 'IT'),
 (4, 'Artificial Intelligence', 'AI'),
-(5, 'Decision Making', 'DS');
+(5, 'Decision Making', 'DS'),
+(6, 'General', 'G');
 
 -- --------------------------------------------------------
 
@@ -84,7 +90,11 @@ CREATE TABLE `doctors` (
 
 INSERT INTO `doctors` (`doctor_id`, `doctor_name`, `doctor_gender`, `department_id`) VALUES
 (4, 'Mohamed El-Ramly', 'male', 1),
-(5, 'Sherif Zahran', 'male', 2);
+(5, 'Sherif Zahran', 'male', 2),
+(6, 'Ihab El-Khodary', 'male', 5),
+(7, 'Ahmed Morsy', 'male', 4),
+(8, 'Ali Zidane', 'male', 2),
+(9, 'Mohamed Abdelwahab', 'male', 1);
 
 -- --------------------------------------------------------
 
@@ -106,7 +116,10 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`student_id`, `student_name`, `student_gender`, `gpa`, `doctor_id`, `department_id`) VALUES
-(5, 'Abdelrahman Ahmed Mohamed', 'male', 3.5, 4, 2);
+(5, 'Abdelrahman Ahmed Mohamed', 'male', 3.5, 5, 2),
+(6, 'Mazen Sherif', 'male', 3, 4, 1),
+(7, 'Jan Kamel', 'male', 2.9, 7, 4),
+(8, 'Khaled Ahmed', 'male', 3.5, 6, 5);
 
 -- --------------------------------------------------------
 
@@ -118,6 +131,29 @@ CREATE TABLE `student_courses` (
   `student_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` enum('admin','sub_admin','user') NOT NULL DEFAULT 'user'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `username`, `password`, `role`) VALUES
+(1, 'admin', '$2y$10$t1ePxy4isvAp8vbGXlVkXOYLYxZnvtbfASCK9I80uAvFJSkN1mDJy', 'admin'),
+(2, 'user', '$2y$10$lpLKUFHf9Y2AVfY/e/ANyuHxneBKFPdHMn7r6601PQCm0Ik/AeTrC', 'user'),
+(4, 'test', '$2y$10$iHnv.V7DL/PZP7eh.gQRYe5rHZ9LtXlACYAmJi9jFdwKQgQ.ZxP/q', 'sub_admin'),
+(5, 'Abdelrahman', '$2y$10$HRr07uG11.8wVXhLW59mDuxrs.oR1/NzSoMvu15WG/P4Py.coR8UC', 'user');
 
 --
 -- Indexes for dumped tables
@@ -159,6 +195,13 @@ ALTER TABLE `student_courses`
   ADD KEY `course_id` (`course_id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -166,25 +209,31 @@ ALTER TABLE `student_courses`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `department_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `doctors`
 --
 ALTER TABLE `doctors`
-  MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `doctor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
