@@ -1,5 +1,6 @@
-<?php
 
+<?php
+include('../auth/security.php');
 include("../config/database.php");
 
 $sql = "SELECT 
@@ -108,17 +109,30 @@ $result = mysqli_query($connection, $sql);
                                 </td>
                                 <td>
 
-                                    <a
-                                        href="edit-student.php?id=<?php echo $student['student_id']; ?>"
-                                        class="btn btn-primary btn-sm">
-                                        Edit
-                                    </a>
+                                    <?php if (isAdminOrSubAdmin()) { ?>
 
-                                    <a
-                                        href="delete-student.php?id=<?php echo $student['student_id']; ?>"
-                                        class="btn btn-danger btn-sm">
-                                        Delete
-                                    </a>
+                                        <a
+                                            href="edit-student.php?id=<?php echo $student['student_id']; ?>"
+                                            class="btn btn-primary btn-sm">
+
+                                            Edit
+
+                                        </a>
+
+                                    <?php } ?>
+
+                                    <?php if (isAdmin()) { ?>
+
+                                        <a
+                                            href="delete-student.php?id=<?php echo $student['student_id']; ?>"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Are you sure?');">
+
+                                            Delete
+
+                                        </a>
+
+                                    <?php } ?>
 
                                 </td>
                                 

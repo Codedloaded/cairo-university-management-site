@@ -1,6 +1,15 @@
 <?php
-
+include('../auth/security.php');
 include("../config/database.php");
+
+
+// Get available departments
+
+$department_sql = "SELECT department_id, department_name
+                   FROM departments
+                   ORDER BY department_name";
+
+$department_result = mysqli_query($connection, $department_sql);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -121,23 +130,50 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                     <!-- department id-->
-                    <div class="mb-3">
+                    <div class="mb-4">
 
                         <label
                             for="department_id"
                             class="form-label">
 
-                            Department ID
+                            Department
 
                         </label>
 
-                        <input
-                            type="text"
-                            class="form-control"
+
+                        <select
+                            class="form-select"
                             id="department_id"
                             name="department_id"
-                            placeholder="Enter department id"
                             required>
+
+                            <option
+                                value=""
+                                selected
+                                disabled>
+
+                                Select department
+
+                            </option>
+
+
+                            <?php while ($department = mysqli_fetch_assoc($department_result)) { ?>
+
+                                <option
+                                    value="<?php echo $department['department_id']; ?>">
+
+                                    <?php
+                                    echo htmlspecialchars(
+                                        $department['department_name']
+                                    );
+                                    ?>
+
+                                </option>
+
+                            <?php } ?>
+
+
+                        </select>
 
                     </div>
                     <!-- Course code-->

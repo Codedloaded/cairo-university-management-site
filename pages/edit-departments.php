@@ -1,7 +1,28 @@
 <?php
+include('../auth/security.php');
+
+if (!isAdminOrSubAdmin()) {
+
+    header("Location: view-departments.php");
+    exit();
+
+}
 
 include("../config/database.php");
 
+$department_id = $_GET['id'];
+
+$sql = "SELECT * FROM departments WHERE department_id = $department_id";
+
+$result = mysqli_query($connection, $sql);
+
+$department = mysqli_fetch_assoc($result);
+
+if (!$department) {
+
+    echo "Department not found.";
+    exit();
+}
 $department_id = $_GET['id'];
 
 

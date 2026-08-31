@@ -1,7 +1,21 @@
 <?php
-
+include('../auth/security.php');
 include("../config/database.php");
+include("../includes/auth.php");
 
+if (!isLoggedIn()) {
+
+    header("Location: login.php");
+    exit();
+
+}
+
+if (!isAdmin()) {
+
+    header("Location: view-students.php");
+    exit();
+
+}
 
 
 

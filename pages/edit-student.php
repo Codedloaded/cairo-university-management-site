@@ -1,20 +1,58 @@
 <?php
 
-include("../config/database.php");
+include("../auth/security.php");
 
+if (!isAdminOrSubAdmin()) {
+
+    header("Location: view-students.php");
+    exit();
+
+}
+
+include("../config/database.php");
 
 
 $student_id = $_GET['id'];
 
 
+$doctor_sql = "SELECT doctor_id, doctor_name
+               FROM doctors
+               ORDER BY doctor_name";
 
-$sql = "SELECT * FROM students WHERE student_id = $student_id";
+$doctor_result = mysqli_query($connection, $doctor_sql);
+
+
+// Get available departments
+
+$department_sql = "SELECT department_id, department_name
+                   FROM departments
+                   ORDER BY department_name";
+
+$department_result = mysqli_query($connection, $department_sql);
+
+
+/* Get student */
+
+$sql = "SELECT *
+        FROM students
+        WHERE student_id = $student_id";
 
 $result = mysqli_query($connection, $sql);
 
 $student = mysqli_fetch_assoc($result);
 
 
+/* Check if student exists */
+
+if (!$student) {
+
+    echo "Student not found.";
+    exit();
+
+}
+
+
+/* Update student */
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -26,11 +64,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     $sql = "UPDATE students SET
+
                 student_name = '$student_name',
                 student_gender = '$student_gender',
                 gpa = '$gpa',
                 doctor_id = '$doctor_id',
                 department_id = '$department_id'
+
             WHERE student_id = $student_id";
 
 
@@ -49,6 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -56,21 +97,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+
+    <!-- Bootstrap -->
 
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
-    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Your CSS -->
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css">
+
 
     <title>Edit Student</title>
 
 </head>
 
+
 <body>
 
-    <?php include('../includes/navbar.php'); ?>
+
+    <?php include("../includes/navbar.php"); ?>
 
 
     <section class="add-section">
@@ -79,16 +133,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <div class="add-form">
 
+
+                <!-- Header -->
+
                 <h1 class="form-title">
                     Edit Student
                 </h1>
+
 
                 <p class="form-description">
                     Update the student's information below.
                 </p>
 
 
-                <form action="" method="POST">
+                <form method="POST">
 
 
                     <!-- Student Name -->
@@ -103,12 +161,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         </label>
 
+
                         <input
                             type="text"
                             class="form-control"
                             id="student_name"
                             name="student_name"
-                            value="<?php echo $student['student_name']; ?>"
+                            value="<?php echo htmlspecialchars($student['student_name']); ?>"
                             required>
 
                     </div>
@@ -126,29 +185,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         </label>
 
+
                         <select
                             class="form-select"
                             id="student_gender"
                             name="student_gender"
                             required>
 
-                            <option value="male"
+
+                            <option
+                                value="male"
                                 <?php
                                 if ($student['student_gender'] == 'male') {
                                     echo 'selected';
                                 }
                                 ?>>
+
                                 Male
+
                             </option>
 
-                            <option value="female"
+
+                            <option
+                                value="female"
                                 <?php
                                 if ($student['student_gender'] == 'female') {
                                     echo 'selected';
                                 }
                                 ?>>
+
                                 Female
+
                             </option>
+
 
                         </select>
 
@@ -167,6 +236,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         </label>
 
+
                         <input
                             type="number"
                             class="form-control"
@@ -175,7 +245,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             step="0.01"
                             min="0"
                             max="4"
-                            value="<?php echo $student['gpa']; ?>">
+                            value="<?php echo htmlspecialchars($student['gpa']); ?>">
 
                     </div>
 
@@ -188,16 +258,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             for="doctor_id"
                             class="form-label">
 
-                            Doctor ID
+                            Doctor
 
                         </label>
 
-                        <input
-                            type="number"
-                            class="form-control"
+
+                        <select
+                            class="form-select"
                             id="doctor_id"
                             name="doctor_id"
-                            value="<?php echo $student['doctor_id']; ?>">
+                            required>
+
+                            <option
+                                value=""
+                                selected
+                                disabled>
+
+                                Select doctor
+
+                            </option>
+
+
+                            <?php while ($doctor = mysqli_fetch_assoc($doctor_result)) { ?>
+
+                                <option
+                                    value="<?php echo $doctor['doctor_id']; ?>">
+
+                                    <?php
+                                    echo htmlspecialchars(
+                                        $doctor['doctor_name']
+                                    );
+                                    ?>
+
+                                </option>
+
+                            <?php } ?>
+
+
+                        </select>
 
                     </div>
 
@@ -210,16 +308,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             for="department_id"
                             class="form-label">
 
-                            Department ID
+                            Department
 
                         </label>
 
-                        <input
-                            type="number"
-                            class="form-control"
+
+                        <select
+                            class="form-select"
                             id="department_id"
                             name="department_id"
-                            value="<?php echo $student['department_id']; ?>">
+                            required>
+
+                            <option
+                                value=""
+                                selected
+                                disabled>
+
+                                Select department
+
+                            </option>
+
+
+                            <?php while ($department = mysqli_fetch_assoc($department_result)) { ?>
+
+                                <option
+                                    value="<?php echo $department['department_id']; ?>">
+
+                                    <?php
+                                    echo htmlspecialchars(
+                                        $department['department_name']
+                                    );
+                                    ?>
+
+                                </option>
+
+                            <?php } ?>
+
+
+                        </select>
 
                     </div>
 
@@ -234,7 +360,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     </button>
 
+
                 </form>
+
 
             </div>
 
@@ -243,9 +371,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </section>
 
 
+    <!-- Bootstrap JavaScript -->
+
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
     </script>
+
 
 </body>
 

@@ -1,7 +1,40 @@
 <?php
+include('../auth/security.php');
+
+if (!isAdminOrSubAdmin()) {
+
+    header("Location: view-courses.php");
+    exit();
+
+}
 
 include("../config/database.php");
 
+
+
+// Get available departments
+
+$department_sql = "SELECT department_id, department_name
+                   FROM departments
+                   ORDER BY department_name";
+
+$department_result = mysqli_query($connection, $department_sql);
+
+
+
+$course_id = $_GET['id'];
+
+$sql = "SELECT * FROM courses WHERE course_id = $course_id";
+
+$result = mysqli_query($connection, $sql);
+
+$course = mysqli_fetch_assoc($result);
+
+if (!$course) {
+
+    echo "Course not found.";
+    exit();
+}
 $course_id = $_GET['id'];
 
 
@@ -162,6 +195,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
 
+                    
+
+
                     <!-- Department -->
 
                     <div class="mb-4">
@@ -170,17 +206,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             for="department_id"
                             class="form-label">
 
-                            Department ID
+                            Department
 
                         </label>
 
-                        <input
-                            type="number"
-                            class="form-control"
+
+                        <select
+                            class="form-select"
                             id="department_id"
                             name="department_id"
-                            value="<?php echo $course['department_id']; ?>"
                             required>
+
+                            <option
+                                value=""
+                                selected
+                                disabled>
+
+                                Select department
+
+                            </option>
+
+
+                            <?php while ($department = mysqli_fetch_assoc($department_result)) { ?>
+
+                                <option
+                                    value="<?php echo $department['department_id']; ?>">
+
+                                    <?php
+                                    echo htmlspecialchars(
+                                        $department['department_name']
+                                    );
+                                    ?>
+
+                                </option>
+
+                            <?php } ?>
+
+
+                        </select>
 
                     </div>
 

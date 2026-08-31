@@ -1,12 +1,13 @@
 <?php
-
+include('../auth/security.php');
 include("../config/database.php");
 
 $sql = "SELECT
             courses.course_id,
             courses.course_name,
             courses.weight,
-            departments.department_name
+            departments.department_name,
+            courses.course_code
         FROM courses
         LEFT JOIN departments
             ON courses.department_id = departments.department_id";
@@ -60,6 +61,7 @@ $result = mysqli_query($connection, $sql);
                             <th>Course Name</th>
                             <th>Weight</th>
                             <th>Department</th>
+                            <th>Course Code</th>
                             <th>Actions</th>
 
                         </tr>
@@ -94,18 +96,34 @@ $result = mysqli_query($connection, $sql);
                                     <?php echo $course['department_name']; ?>
                                 </td>
                                 <td>
+                                    <?php echo $course['course_code'];?>
+                                </td>
+                                <td>
 
-                                    <a
-                                        href="edit-courses.php?id=<?php echo $course['course_id']; ?>"
-                                        class="btn btn-primary btn-sm">
-                                        Edit
-                                    </a>
+                                   <?php if (isAdminOrSubAdmin()) { ?>
 
-                                    <a
-                                        href="delete-courses.php?id=<?php echo $course['course_id']; ?>"
-                                        class="btn btn-danger btn-sm">
-                                        Delete
-                                    </a>
+                                        <a
+                                            href="edit-courses.php?id=<?php echo $course['course_id']; ?>"
+                                            class="btn btn-primary btn-sm">
+
+                                            Edit
+
+                                        </a>
+
+                                    <?php } ?>
+
+                                    <?php if (isAdmin()) { ?>
+
+                                        <a
+                                            href="delete-courses.php?id=<?php echo $course['course_id']; ?>"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Are you sure?');">
+
+                                            Delete
+
+                                        </a>
+
+                                    <?php } ?>
 
                                 </td>
 
